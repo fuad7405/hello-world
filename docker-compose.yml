@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  hello-world-maven:
+    build:
+      context: hello-world-maven
+    restart: unless-stopped
+    container_name: hello-world-maven
+    environment:
+      TZ: "Asia/Dhaka"
+      ACTIVE_PROFILE: docker
+    ports:
+      - "6060:8080"
+    healthcheck:
+      test: "exit 0"
+
+  hello-world-gradle:
+    build:
+      context: hello-world-gradle
+    restart: unless-stopped
+    container_name: hello-world-gradle
+    environment:
+      TZ: "Asia/Dhaka"
+      ACTIVE_PROFILE: docker
+    ports:
+      - "6070:8080"
+    healthcheck:
+      test: "exit 0"
