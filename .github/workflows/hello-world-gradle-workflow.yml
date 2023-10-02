@@ -40,5 +40,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Make gradlew executable
+        run: chmod +x hello-world-gradle/./gradlew
+
       - name: Build and test project with Gradle
         run: hello-world-gradle/./gradlew build --no-daemon
