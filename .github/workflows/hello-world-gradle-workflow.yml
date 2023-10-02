@@ -44,4 +44,4 @@ jobs:
         run: chmod +x hello-world-gradle/./gradlew
 
       - name: Build and test project with Gradle
-        run: hello-world-gradle/./gradlew build --no-daemon
+        run: hello-world-gradle/./gradlew build
