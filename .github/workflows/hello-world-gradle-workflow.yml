@@ -41,7 +41,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Goto project directory
-        run: cd hello-world-gradle/
+        run: | 
+          cd hello-world-gradle/
       - name: list of file
         run: ls -lh
 
