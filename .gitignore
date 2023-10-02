@@ -1,11 +1,11 @@
 HELP.md
 target/
 
-**/.mvn/wrapper/maven-wrapper.jar
+!**/.mvn/wrapper/maven-wrapper.jar
 **/target/
 
 **/.gradle/
-**/gradle/wrapper/gradle-wrapper.jar
+!**/gradle/wrapper/gradle-wrapper.jar
 **/build/
 
 ### STS ###
