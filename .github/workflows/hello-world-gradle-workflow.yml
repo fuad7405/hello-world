@@ -34,13 +34,11 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Goto inner project directory
-        run: cd hello-world-gradle
-
       - name: Build and test project with Gradle
-        run: ./gradlew build
+        run: hello-world-gradle/./gradlew build --no-daemon
