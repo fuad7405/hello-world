@@ -34,6 +34,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
+      - name: Goto inner project directory
+        run: cd hello-world-maven
+
       - name: Build and test project with Maven
-        run: mvn -B package --file hello-world-maven/pom.xml
+        run: mvn -B package --file pom.xml
       
