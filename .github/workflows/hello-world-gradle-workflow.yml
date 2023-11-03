@@ -2,12 +2,18 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
     paths-ignore:
       - "hello-world-maven/**"
       - "hello-world-war/**"
   pull_request:
-    branches: [master]
+    types:
+      - opened
+      - synchronize
+    branches: [ master ]
+    paths-ignore:
+      - "hello-world-maven/**"
+      - "hello-world-war/**"
 
   workflow_dispatch:
 
