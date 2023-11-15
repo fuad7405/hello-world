@@ -86,7 +86,7 @@ jobs:
         id: last_tag
         run: |
           cd hello-world-gradle/
-          chmod +x gradlew          
+          chmod +x gradlew
           LAST_TAG=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')
           echo "${LAST_TAG}"
           echo "::set-output name=last_tag::${LAST_TAG}"
@@ -148,17 +148,24 @@ jobs:
       - name: Update Version in gradle properties file
         run: |
           cd hello-world-gradle/
-          ./gradlew -Pversion="${NEW_VERSION}"
+          echo "$NEW_VERSION"
+          ./gradlew -Pversion="${NEW_VERSION} -Dorg.gradle.project.version=${NEW_VERSION}"
 
       - name: Build and test project with Gradle
         run: |
           cd hello-world-gradle/
           ./gradlew build
 
-      - name: Add and Commit Gradle Properties File
+      - name: List gradle.properties Files
         run: |
-          cd hello-world-gradle/
-          git add "gradle.properties"
+          find . -maxdepth 3 -type f -name "gradle.properties" > gradle_properties_files.txt
+          cat gradle_properties_files.txt
+
+      - name: Add and Commit Gradle Properties Files
+        run: |
+          while IFS= read -r file; do
+            git add "$file"
+          done < gradle_properties_files.txt
           git commit -m "Add and commit gradle.properties files [skip ci]"
 
       - name: Push Changes
