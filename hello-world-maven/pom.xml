@@ -12,7 +12,7 @@
 
     <groupId>com.fuadhasan</groupId>
     <artifactId>hello-world-maven</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1.0</version>
     <packaging>jar</packaging>
 
     <name>Spring Boot Hello World with Maven</name>
