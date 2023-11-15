@@ -155,16 +155,9 @@ jobs:
           cd hello-world-gradle/
           ./gradlew build
 
-      - name: List gradle.properties Files
+      - name: Add and Commit Gradle Properties File
         run: |
-          find . -maxdepth 3 -type f -name "gradle.properties" > gradle_properties_files.txt
-          cat gradle_properties_files.txt
-
-      - name: Add and Commit Gradle Properties Files
-        run: |
-          while IFS= read -r file; do
-            git add "$file"
-          done < gradle_properties_files.txt
+          git add "gradle.properties"
           git commit -m "Add and commit gradle.properties files [skip ci]"
 
       - name: Push Changes
