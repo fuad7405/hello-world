@@ -86,9 +86,8 @@ jobs:
         id: last_tag
         run: |
           cd hello-world-gradle/
-          chmod +x gradlew
-          ./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}'
-          LAST_TAG=$(./gradlew --no-daemon printVersion)
+          chmod +x gradlew          
+          LAST_TAG=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')
           echo "${LAST_TAG}"
           echo "::set-output name=last_tag::${LAST_TAG}"
 
