@@ -149,7 +149,7 @@ jobs:
         run: |
           cd hello-world-gradle/
           echo "$NEW_VERSION"
-          ./gradlew -Dorg.gradle.project.version=${NEW_VERSION}"
+          ./gradlew -Dorg.gradle.project.version="${NEW_VERSION}"
           git status
 
       - name: Build and test project with Gradle
