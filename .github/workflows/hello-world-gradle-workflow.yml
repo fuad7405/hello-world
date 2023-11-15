@@ -157,6 +157,7 @@ jobs:
 
       - name: Add and Commit Gradle Properties File
         run: |
+          cd hello-world-gradle/
           git add "gradle.properties"
           git commit -m "Add and commit gradle.properties files [skip ci]"
 
