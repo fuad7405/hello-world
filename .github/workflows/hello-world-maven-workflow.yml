@@ -79,7 +79,7 @@ jobs:
           cd hello-world-maven/
           LAST_TAG=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "${LAST_TAG}"
-          echo "::set-output name=last_tag::${LAST_TAG}"
+          echo "last_tag=${LAST_TAG}" >> $GITHUB_OUTPUT
 
       - name: Determine bump type
         id: bump_type
@@ -88,19 +88,19 @@ jobs:
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
 
           if [[ "$COMMIT_MSG" == *"[major]"* ]]; then
-            echo "::set-output name=bump_type::major"
+            echo "bump_type=major" >> $GITHUB_OUTPUT
           elif [[ "$COMMIT_MSG" == *"[minor]"* ]]; then
-            echo "::set-output name=bump_type::minor"
+            echo "bump_type=minor" >> $GITHUB_OUTPUT
           elif [[ "$COMMIT_MSG" == *"[patch]"* ]]; then
-            echo "::set-output name=bump_type::patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
           elif [[ "$COMMIT_MSG" == *"[hotfix]"* ]] || [[ "$COMMIT_MSG" == *"[bugfix]"* ]]; then
-            echo "::set-output name=bump_type::patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
           elif [[ "$BRANCH_NAME" == "feature/"* ]]; then
-            echo "::set-output name=bump_type::minor"
+            echo "bump_type=minor" >> $GITHUB_OUTPUT
           elif [[ "$BRANCH_NAME" == "bugfix/"* ]] || [[ "$BRANCH_NAME" == "hotfix/"* ]]; then
-            echo "::set-output name=bump_type::patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=bump_type::build"
+            echo "bump_type=build" >> $GITHUB_OUTPUT
           fi
           
       - name: Calculate new version
@@ -133,7 +133,7 @@ jobs:
 
           NEW_VERSION="$MAJOR.$MINOR.$PATCH.$BUILD"
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          echo "::set-output name=new_version::${NEW_VERSION}"
+          echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Update Version in Pom file
         run: |
