@@ -89,7 +89,7 @@ jobs:
           chmod +x gradlew
           LAST_TAG=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')
           echo "${LAST_TAG}"
-          echo "::set-output name=last_tag::${LAST_TAG}"
+          echo "last_tag=${LAST_TAG}" >> $GITHUB_OUTPUT
 
       - name: Determine bump type
         id: bump_type
@@ -98,19 +98,19 @@ jobs:
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
 
           if [[ "$COMMIT_MSG" == *"[major]"* ]]; then
-            echo "::set-output name=bump_type::major"
+            echo "bump_type=major" >> $GITHUB_OUTPUT
           elif [[ "$COMMIT_MSG" == *"[minor]"* ]]; then
-            echo "::set-output name=bump_type::minor"
+            echo "bump_type=minor" >> $GITHUB_OUTPUT
           elif [[ "$COMMIT_MSG" == *"[patch]"* ]]; then
-            echo "::set-output name=bump_type::patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
           elif [[ "$COMMIT_MSG" == *"[hotfix]"* ]] || [[ "$COMMIT_MSG" == *"[bugfix]"* ]]; then
-            echo "::set-output name=bump_type::patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
           elif [[ "$BRANCH_NAME" == "feature/"* ]]; then
-            echo "::set-output name=bump_type::minor"
+            echo "bump_type=minor" >> $GITHUB_OUTPUT
           elif [[ "$BRANCH_NAME" == "bugfix/"* ]] || [[ "$BRANCH_NAME" == "hotfix/"* ]]; then
-            echo "::set-output name=bump_type::patch"
+            echo "bump_type=patch" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=bump_type::build"
+            echo "bump_type=build" >> $GITHUB_OUTPUT
           fi
 
       - name: Calculate new version
@@ -143,7 +143,7 @@ jobs:
 
           NEW_VERSION="$MAJOR.$MINOR.$PATCH.$BUILD"
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          echo "::set-output name=new_version::${NEW_VERSION}"
+          echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Update Version in gradle properties file
         run: |
@@ -155,41 +155,3 @@ jobs:
         run: |
           cd hello-world-gradle/
           ./gradlew build
-
-#      - name: List gradle.properties Files
-#        run: |
-#          find . -maxdepth 3 -type f -name "gradle.properties" > gradle_properties_files.txt
-#          cat gradle_properties_files.txt
-#
-#      - name: Add and Commit Gradle Properties Files
-#        run: |
-#          while IFS= read -r file; do
-#            git add "$file"
-#          done < gradle_properties_files.txt
-#          git commit -m "Add and commit gradle.properties files [skip ci]"
-#
-#      - name: Push Changes
-#        run: |
-#          # Use the PAT secret to authenticate the push
-#          # git remote set-url origin "https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }}.git"
-#          git push origin master  # Replace with the name of your protected branch
-#
-#      - name: Tag and Create Release
-#        run: |
-#          NEW_VERSION=${{ steps.new_version.outputs.new_version }}
-#          git tag -a "$NEW_VERSION" -m "Release v$NEW_VERSION"
-#          git push origin $NEW_VERSION
-#
-#      - name: Merge changes from master to develop
-#        run: |
-#          # Authenticate using a GitHub token
-#          #gh auth login --with-token  ${{ secrets.ACCESS_TOKEN }}
-#
-#          # Ensure you're on the 'develop' branch
-#          git checkout develop
-#
-#          # Fetch and merge the latest changes from the source branch
-#          git pull origin master -X ours
-#
-#          # Push the merged changes to 'develop'
-#          git push origin develop
