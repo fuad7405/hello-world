@@ -69,8 +69,7 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config commit.gpgsign true
-          git config --local user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git config advice.addIgnoredFile false
 
@@ -156,7 +155,7 @@ jobs:
           while IFS= read -r file; do
             git add "$file"
           done < pom_files.txt
-          git commit -S -m "Add and commit pom.xml files [skip ci]"
+          git commit -S -m "Update version in pom.xml files [skip ci]"
 
       - name: Push Changes
         run: |
