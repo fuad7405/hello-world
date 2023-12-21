@@ -155,7 +155,7 @@ jobs:
           while IFS= read -r file; do
             git add "$file"
           done < pom_files.txt
-          git commit -S -m "Update version in pom.xml files [skip ci]"
+          git commit -m "Update version in pom.xml files [skip ci]"
 
       - name: Push Changes
         run: |
