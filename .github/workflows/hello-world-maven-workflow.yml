@@ -19,5 +19,5 @@ on:
 
 jobs:
   publish-jar:
-    uses: "fuad7405/github_workflows/.github/workflows/maven-8.yml@master"
+    uses: "fuad7405/github_workflows/.github/workflows/maven-17.yml@master"
     secrets: inherit
