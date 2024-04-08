@@ -44,7 +44,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.11.0
+        uses: gradle/gradle-build-action@v3.2.0
 
       - name: Build and test project with Gradle
         run: |
@@ -74,7 +74,7 @@ jobs:
           cache: "maven"
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.11.0
+        uses: gradle/gradle-build-action@v3.2.0
 
       - name: Set up Git
         run: |
