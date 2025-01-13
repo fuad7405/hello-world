@@ -4,3 +4,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      
+  - package-ecosystem: "maven"
+    directory: "/hello-world-maven"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "gradle"
+    directory: "/hello-world-gradle"
+    schedule:
+      interval: "weekly"
