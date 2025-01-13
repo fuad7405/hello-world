@@ -4,3 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      
+  - package-ecosystem: "maven"
+    directory: "/hello-world-maven/"
+    schedule:
+      interval: "weekly"
