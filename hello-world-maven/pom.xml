@@ -24,7 +24,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <springdoc.version>2.5.0</springdoc.version>
+        <springdoc.version>2.8.4</springdoc.version>
         <yguard.version>4.1.0</yguard.version>
 
         <mainclass>com.fuadhasan.helloworld.HelloWorldApplication</mainclass>
