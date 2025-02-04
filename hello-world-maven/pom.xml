@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -24,8 +24,8 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <springdoc.version>2.5.0</springdoc.version>
-        <yguard.version>4.1.0</yguard.version>
+        <springdoc.version>2.8.4</springdoc.version>
+        <yguard.version>4.1.1</yguard.version>
 
         <mainclass>com.fuadhasan.helloworld.HelloWorldApplication</mainclass>
     </properties>
@@ -98,7 +98,7 @@
 			  -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
+                <version>3.1.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.yworks</groupId>
@@ -114,7 +114,7 @@
                         </goals>
                         <id>obfuscate</id>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <property
                                         name="project.build.prefix"
                                         value="${project.build.directory}/${project.build.finalName}"/>
@@ -218,7 +218,7 @@
                                         <exclude name="META-INF/**"/>
                                     </zipfileset>
                                 </zip>
-                            </tasks>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
