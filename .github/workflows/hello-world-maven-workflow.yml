@@ -2,7 +2,8 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - '**'
     paths-ignore:
       - "hello-world-gradle/**"
       - "hello-world-war/**"
@@ -10,7 +11,8 @@ on:
     types:
       - opened
       - synchronize
-    branches: [ master ]
+    branches:
+      - '**'
     paths-ignore:
       - "hello-world-gradle/**"
       - "hello-world-war/**"
@@ -22,14 +24,20 @@ jobs:
     name: Build Maven Project
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        java-version: [ 11, 17, 21, 25 ]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up JDK 17
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v5
         with:
-          java-version: "17"
+          java-version: ${{ matrix.java-version }}
           distribution: "temurin"
           cache: "maven"
 
@@ -44,14 +52,24 @@ jobs:
       - name: Build and test project with Maven
         run: |
           cd hello-world-maven/
-          mvn -B package --file pom.xml
+          if [ -f ./mvnw ]; then
+            ./mvnw -B package --file pom.xml
+          else
+            mvn -B package --file pom.xml
+          fi
 
   release-jar:
-    if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
+    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
+    needs: build
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
+
+    strategy:
+      matrix:
+        java-version: [ 17 ]
 
     steps:
       - name: Checkout
@@ -60,10 +78,10 @@ jobs:
           token: ${{ secrets.ACCESS_TOKEN }}
       - run: git fetch --prune --unshallow
 
-      - name: Set up JDK 17
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v5
         with:
-          java-version: "17"
+          java-version: ${{ matrix.java-version }}
           distribution: "temurin"
           cache: "maven"
 
@@ -138,12 +156,20 @@ jobs:
       - name: Update Version in Pom file
         run: |
           cd hello-world-maven/
-          mvn -B versions:set -DnewVersion="${NEW_VERSION}" -DgenerateBackupPoms=false
+          if [ -f ./mvnw ]; then
+            ./mvnw -B versions:set -DnewVersion="${NEW_VERSION}" -DgenerateBackupPoms=false
+          else
+            mvn -B versions:set -DnewVersion="${NEW_VERSION}" -DgenerateBackupPoms=false
+          fi
 
       - name: Build and test project with Maven
         run: |
           cd hello-world-maven/
-          mvn -B package --file pom.xml
+          if [ -f ./mvnw ]; then
+            ./mvnw -B package --file pom.xml
+          else
+            mvn -B package --file pom.xml
+          fi
 
       - name: List Pom Files
         run: |
