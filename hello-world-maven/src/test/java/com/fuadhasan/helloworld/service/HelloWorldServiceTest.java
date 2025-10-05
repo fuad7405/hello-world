@@ -37,9 +37,9 @@ class HelloWorldServiceTest {
         ServerResponse<Object> actualGetResult = this.service.get();
 
         // Assert
-        assertEquals(ServerResponseCode.SUCCESS, actualGetResult.getCode());
-        assertNull(actualGetResult.getData());
-        assertEquals("Success", actualGetResult.getMessage());
+        assertEquals(ServerResponseCode.SUCCESS, actualGetResult.code());
+        assertNull(actualGetResult.data());
+        assertEquals("Success", actualGetResult.message());
     }
 
     @Test
@@ -49,15 +49,15 @@ class HelloWorldServiceTest {
         HelloWorldRequest helloWorldRequest = mock(HelloWorldRequest.class);
 
         // When
-        when(helloWorldRequest.getName()).thenReturn("Name");
+        when(helloWorldRequest.name()).thenReturn("Name");
 
         ServerResponse<Object> actualPostResult = this.service.post(helloWorldRequest);
 
         // Assert
-        assertEquals(ServerResponseCode.SUCCESS, actualPostResult.getCode());
-        assertEquals("Hello World - Name", actualPostResult.getData());
-        assertEquals("Success", actualPostResult.getMessage());
+        assertEquals(ServerResponseCode.SUCCESS, actualPostResult.code());
+        assertEquals("Hello World - Name", actualPostResult.data());
+        assertEquals("Success", actualPostResult.message());
 
-        verify(helloWorldRequest).getName();
+        verify(helloWorldRequest).name();
     }
 }
