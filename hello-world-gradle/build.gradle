@@ -4,8 +4,10 @@ plugins {
     id "io.spring.dependency-management" version "${springDependencyManagementVersion}"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 repositories {
     mavenLocal()
