@@ -10,10 +10,10 @@ import com.fuadhasan.helloworld.domain.response.ServerResponseCode;
 public abstract class BaseService {
 
     protected ServerResponse<Object> getServerResponse() {
-        return ServerResponse.builder().code(ServerResponseCode.SUCCESS).message("Success").build();
+        return new ServerResponse<>(ServerResponseCode.SUCCESS, "Success", null);
     }
 
     protected ServerResponse<Object> getServerResponse(Object data) {
-        return getServerResponse().toBuilder().data(data).build();
+        return new ServerResponse<>(ServerResponseCode.SUCCESS, "Success", data);
     }
 }

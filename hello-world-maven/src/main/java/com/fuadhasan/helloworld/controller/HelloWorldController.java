@@ -4,7 +4,7 @@ import com.fuadhasan.helloworld.api.HelloWorldApi;
 import com.fuadhasan.helloworld.domain.request.HelloWorldRequest;
 import com.fuadhasan.helloworld.domain.response.ServerResponse;
 import com.fuadhasan.helloworld.service.HelloWorldService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 27-Jul-2022
  */
 @RestController
-@RequiredArgsConstructor
 public class HelloWorldController implements HelloWorldApi {
 
     private final HelloWorldService helloWorldService;
+
+    @Autowired
+    public HelloWorldController(HelloWorldService helloWorldService) {
+        this.helloWorldService = helloWorldService;
+    }
 
     public ResponseEntity<ServerResponse<Object>> get() {
         return ResponseEntity.ok(helloWorldService.get());

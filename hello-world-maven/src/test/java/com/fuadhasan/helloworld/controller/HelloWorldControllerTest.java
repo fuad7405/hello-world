@@ -58,7 +58,7 @@ class HelloWorldControllerTest {
         // Arrange
         when(this.service.post(any(HelloWorldRequest.class))).thenReturn(mock(ServerResponse.class));
 
-        HelloWorldRequest helloWorldRequest = HelloWorldRequest.builder().name("Name").build();
+        HelloWorldRequest helloWorldRequest = new HelloWorldRequest("Name");
 
         // ACT
         ResponseEntity<ServerResponse<Object>> actualResult = this.controller.post(helloWorldRequest);

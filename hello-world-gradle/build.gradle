@@ -4,8 +4,10 @@ plugins {
     id "io.spring.dependency-management" version "${springDependencyManagementVersion}"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 repositories {
     mavenLocal()
@@ -31,9 +33,15 @@ dependencies {
 
     testImplementation enforcedPlatform("org.junit:junit-bom:${junitBomVersion}")
     testImplementation "org.junit.jupiter:junit-jupiter-api"
-
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+tasks.test {
+    useJUnitPlatform()
+    failOnNoDiscoveredTests = false
 }
