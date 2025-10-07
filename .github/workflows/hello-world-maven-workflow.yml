@@ -55,7 +55,7 @@ jobs:
           ./mvnw -B package --file pom.xml
 
   release-jar:
-    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/master' }}
     needs: build
     runs-on: ubuntu-latest
 
