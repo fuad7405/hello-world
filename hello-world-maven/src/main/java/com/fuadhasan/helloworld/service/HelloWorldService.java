@@ -22,6 +22,6 @@ public class HelloWorldService extends BaseService {
     }
 
     public ServerResponse<Object> post(HelloWorldRequest request) {
-        return getServerResponse(appName + " - " + request.getName());
+        return getServerResponse(appName + " - " + request.name());
     }
 }
