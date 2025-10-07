@@ -52,16 +52,17 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.5.0
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build and test project with Gradle
         run: |
           cd hello-world-gradle/
           chmod +x gradlew
+          ./gradlew clean
           ./gradlew build
 
   release-jar:
-    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/master' }}
     needs: build
     runs-on: ubuntu-latest
 
@@ -88,7 +89,7 @@ jobs:
           cache: "maven"
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.5.0
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Set up Git
         run: |
@@ -168,4 +169,5 @@ jobs:
       - name: Build and test project with Gradle
         run: |
           cd hello-world-gradle/
+          ./gradlew clean
           ./gradlew build
