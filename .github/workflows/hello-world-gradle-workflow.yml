@@ -58,6 +58,7 @@ jobs:
         run: |
           cd hello-world-gradle/
           chmod +x gradlew
+          ./gradlew clean
           ./gradlew build
 
   release-jar:
@@ -168,4 +169,5 @@ jobs:
       - name: Build and test project with Gradle
         run: |
           cd hello-world-gradle/
+          ./gradlew clean
           ./gradlew build
