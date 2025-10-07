@@ -52,6 +52,7 @@ jobs:
       - name: Build and test project with Maven
         run: |
           cd hello-world-maven/
+          ./mvnw clean
           ./mvnw -B package --file pom.xml
 
   release-jar:
@@ -157,6 +158,7 @@ jobs:
       - name: Build and test project with Maven
         run: |
           cd hello-world-maven/
+          ./mvnw clean
           ./mvnw -B package --file pom.xml
 
       - name: List Pom Files
